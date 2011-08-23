@@ -4,9 +4,9 @@ require 'pony'
 require 'yaml'
 
 class Grep < Sinatra::Base
-    environment = ENV['DATABASE_URL'] ? 'production' : 'development'
+    environment = ENV['DATABASE_URL'] ? 'heroku' : 'development'
 
-    if environment == 'development'
+    if not ENV['SENDGRID_USERNAME']
         emailconfig = YAML.load(File.read('config/development.yml'))['email']
     end
 
