@@ -53,7 +53,7 @@ class Grep < Sinatra::Base
 
     post '/incoming_mail' do
         correspondent = params[:from]
-        subject = params[:subject].chomp
+        subject = params[:subject].chomp.sub(/EOM$/,'').chomp
         body = params[:plain].chomp
         # do something with mail
         pattern = subject
