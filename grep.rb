@@ -58,7 +58,10 @@ class Grep < Sinatra::Base
         # do something with mail
         pattern = subject
         answer = find(Regexp.new(pattern))
-        email(correspondent,subject,answer)
+        if not answer
+            answer = "no matches :("
+        end
+        email(correspondent,subject,answer+"\n"+"http://grep.herokuapp.com/")
         'success'
     end
 
