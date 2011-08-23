@@ -16,35 +16,54 @@ class Grep < Sinatra::Base
     set :email_service, ENV['EMAIL_SERVICE'] || emailconfig['service']
     set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
 
+    helpers do
+        def find(pattern)
+            open('yawl.txt').grep(pattern).join
+        end
+        
+        def email(to,subject,body)
+          Pony.mail(
+          :from => settings.email_address,
+          :to => to,
+          :subject => subject,
+          :body => body,
+          :port => '587',
+          :via => :smtp,
+          :via_options => { 
+            :port                 => '587', 
+            :address              => 'smtp.' + settings.email_service, 
+            :enable_starttls_auto => true, 
+            :user_name            => settings.email_username, 
+            :password             => settings.email_password, 
+            :authentication       => :plain, 
+            :domain               => settings.email_domain
+          })
+        end
+    end
+    
     get '/' do
-    Pony.mail(
-      :from => settings.email_address,
-      :to => settings.email_address,
-      :subject => "subject",
-      :body => Time.now.to_s,
-      :port => '587',
-      :via => :smtp,
-      :via_options => { 
-        :port                 => '587', 
-        :address              => 'smtp.' + settings.email_service, 
-        :enable_starttls_auto => true, 
-        :user_name            => settings.email_username, 
-        :password             => settings.email_password, 
-        :authentication       => :plain, 
-        :domain               => settings.email_domain
-      })
     "Hello, world"
     end
 
     get '/grep/:pattern' do
-        open('yawl.txt').grep(Regexp.new(params[:pattern])).join
+        pattern = params[:pattern]
+        answer = find(Regexp.new(pattern))
+        email("matt.hickford@gmail.com",pattern,answer)
+        answer
     end
 
     post '/incoming_mail' do
-         mail = Mail.new(params[:message])
+        correspondent = params[:from]
+        subject = params[:subject].chomp
+        body = params[:plain].chomp
         # do something with mail
-        puts params[:message]
-        puts params[:message]
+        pattern = subject
+        
+        answer = find(Regexp.new(pattern))
+        
+        email(correspondent,subject,answer)
+
+        
         'success'
     end
 
