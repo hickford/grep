@@ -1,2 +1,2 @@
 require './grep'
-run Sinatra::Application
+run Grep

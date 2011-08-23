@@ -1,4 +1,4 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'mail'
 
 class Grep < Sinatra::Base
