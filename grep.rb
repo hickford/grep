@@ -42,13 +42,12 @@ class Grep < Sinatra::Base
     end
     
     get '/' do
-    "Hello, world"
+        File.read('index.html')
     end
 
     get '/grep/:pattern' do
         pattern = params[:pattern]
         answer = find(Regexp.new(pattern))
-        email("matt.hickford@gmail.com",pattern,answer)
         answer
     end
 
@@ -58,12 +57,8 @@ class Grep < Sinatra::Base
         body = params[:plain].chomp
         # do something with mail
         pattern = subject
-        
         answer = find(Regexp.new(pattern))
-        
         email(correspondent,subject,answer)
-
-        
         'success'
     end
 
