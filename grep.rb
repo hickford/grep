@@ -12,7 +12,7 @@ class Grep < Sinatra::Base
 
     set :email_username, ENV['SENDGRID_USERNAME'] || emailconfig['username']
     set :email_password, ENV['SENDGRID_PASSWORD'] || emailconfig['password']
-    set :email_address, 'matt.hickford@gmail.com'
+    set :email_address, ENV['CLOUDMAILIN_FORWARD_ADDRESS'] || emailconfig['address']
     set :email_service, ENV['EMAIL_SERVICE'] || emailconfig['service']
     set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
 
