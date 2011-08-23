@@ -61,7 +61,7 @@ class Grep < Sinatra::Base
         if not answer
             answer = "no matches :("
         end
-        email(correspondent,subject,answer+"\n"+"http://grep.herokuapp.com/")
+        email(correspondent,"Re: "+subject,answer+"\n"+"http://grep.herokuapp.com/")
         'success'
     end
 
