@@ -21,7 +21,7 @@ class Grep < Sinatra::Base
       :from => settings.email_address,
       :to => settings.email_address,
       :subject => "subject",
-      :body => "body",
+      :body => Time.now,
       :port => '587',
       :via => :smtp,
       :via_options => { 
