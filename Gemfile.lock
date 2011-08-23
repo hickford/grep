@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rak (1.0)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  rak
