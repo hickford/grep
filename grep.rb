@@ -13,7 +13,7 @@ class Grep < Sinatra::Base
     set :email_address, ENV['CLOUDMAILIN_FORWARD_ADDRESS'] || emailconfig['address']
     set :email_service, ENV['EMAIL_SERVICE'] || emailconfig['service']
     set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
-
+      
     helpers do
         def find(pattern)
             open('yawl.txt').grep(pattern)
@@ -39,11 +39,6 @@ class Grep < Sinatra::Base
         end
     end
     
-    get '/' do
-        cache_control :public
-        File.read('index.html')
-    end
-
     get '/grep' do
         pattern = params[:pattern]
         if not pattern or pattern == ''
