@@ -46,7 +46,7 @@ class Grep < Sinatra::Base
 
     get '/grep' do
         pattern = params[:pattern]
-        if not pattern
+        if not pattern or pattern == ''
             redirect to('/')
         end
         content_type 'text/plain'
