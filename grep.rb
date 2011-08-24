@@ -4,8 +4,6 @@ require 'pony'
 require 'yaml'
 
 class Grep < Sinatra::Base
-    environment = ENV['DATABASE_URL'] ? 'heroku' : 'development'
-
     if not ENV['SENDGRID_USERNAME']
         emailconfig = YAML.load(File.read('config/development.yml'))['email']
     end
@@ -18,7 +16,7 @@ class Grep < Sinatra::Base
 
     helpers do
         def find(pattern)
-            open('yawl.txt').grep(pattern).join
+            open('yawl.txt').grep(pattern)
         end
         
         def email(to,subject,body)
@@ -27,7 +25,7 @@ class Grep < Sinatra::Base
           :to => to,
           :subject => subject,
           :body => body,
-          :port => '587',
+          #:port => '587',
           :via => :smtp,
           :via_options => { 
             :port                 => '587', 
@@ -42,27 +40,31 @@ class Grep < Sinatra::Base
     end
     
     get '/' do
+        cache_control :public
         File.read('index.html')
     end
 
-    get '/grep/:pattern' do
+    get '/grep' do
         pattern = params[:pattern]
-        answer = find(Regexp.new(pattern))
-        answer
+        if not pattern
+            redirect to('/')
+        end
+        content_type 'text/plain'
+        cache_control :public
+        answer = find(Regexp.new(pattern)).join
     end
 
     post '/incoming_mail' do
         correspondent = params[:from]
-        subject = params[:subject].chomp.sub(/EOM$/,'').chomp
+        subject = params[:subject].chomp.sub(/\s\W?EOM\W?$/,'').chomp
         body = params[:plain].chomp
         # do something with mail
         pattern = subject
-        answer = find(Regexp.new(pattern))
-        if answer == ''
-            answer = "no matches :("
-        end
-        email(correspondent,"Re: "+subject,answer+"\n"+"http://grep.herokuapp.com/")
-        'success'
+        matches = find(Regexp.new(pattern))
+        answer = matches ? matches.join : "no matches :("
+        email(correspondent,"Re: #{subject}","#{answer}\nhttp://grep.herokuapp.com/")
+        content_type 'text/plain'
+        "Emailed #{matches.length} matches for #{pattern} to #{correspondent}"
     end
 
 end

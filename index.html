@@ -2,26 +2,21 @@
 <head><title>Grep</title></head>
 <body>
 <h1>Grep</h1>
-<p>Email your request to <a href="mailto:47cb123c0a0cc753c94f@cloudmailin.net">47cb123c0a0cc753c94f@cloudmailin.net</a> with the pattern in the subject line or make a web request at eg. <a href="/grep/hope">/grep/hope</a>.</p>
-</p>
+<p>This webservice allows you to search the <a href="http://everything2.com/title/ENABLE+word+list">English dictionary</a> for words matching a particular pattern. This might be useful for solving crosswords.</p>
+
 <h2>Pattern syntax</h2>
-<p>Use . for wildcard, use ^ for begins and $ for ends, eg. ^b..t$ for four letters words beginning b and ending t.</p>
-<h2>Example</h2>
-<p>^b..t$</p>
-<textarea rows="13">
-bait
-bant
-bast
-batt
-bayt
-beat
-beet
-belt
-bent
-best
-...
-butt
-</textarea>
-</h2>
+<p>The syntax is to use . for wildcard, ^ for starts with and $ for ends with, so <b>^b..t$</b> will match four letter words beginning b and ending t.</p>
+
+<h2>Search</h2>
+<form action="/grep" method="get">
+<input type="text" name="pattern" autofocus/>
+<input type="submit" value="Submit" />
+</form>
+
+<h2>Email service</h2>
+<p>You can also search the word list by email. Send an email to <a href="mailto:47cb123c0a0cc753c94f@cloudmailin.net">47cb123c0a0cc753c94f@cloudmailin.net</a> with the <em>pattern in the subject line</em>. You will receive a list of matching words by return post.</p>
+</p>
+
+
 </body>
 </html>
