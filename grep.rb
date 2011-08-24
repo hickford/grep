@@ -51,7 +51,7 @@ class Grep < Sinatra::Base
         end
         content_type 'text/plain'
         cache_control :public
-        answer = find(Regexp.new(pattern.lower)).join
+        answer = find(Regexp.new(pattern.downcase)).join
     end
 
     post '/incoming_mail' do
@@ -60,7 +60,7 @@ class Grep < Sinatra::Base
         body = params[:plain].chomp
         # do something with mail
         pattern = subject
-        matches = find(Regexp.new(pattern.lower))
+        matches = find(Regexp.new(pattern.downcase))
         answer = matches ? matches.join : "no matches :("
         email(correspondent,"Re: #{subject}","#{answer}\nhttp://grep.herokuapp.com/")
         content_type 'text/plain'
