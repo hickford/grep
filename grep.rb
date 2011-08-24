@@ -51,16 +51,16 @@ class Grep < Sinatra::Base
         end
         content_type 'text/plain'
         cache_control :public
-        answer = find(Regexp.new(pattern)).join
+        answer = find(Regexp.new(pattern.lower)).join
     end
 
     post '/incoming_mail' do
         correspondent = params[:from]
-        subject = params[:subject].chomp.sub(/\s\W?EOM\W?$/,'').chomp
+        subject = params[:subject].chomp.sub(/\s\W?EOM\W?$/i,'').chomp
         body = params[:plain].chomp
         # do something with mail
         pattern = subject
-        matches = find(Regexp.new(pattern))
+        matches = find(Regexp.new(pattern.lower))
         answer = matches ? matches.join : "no matches :("
         email(correspondent,"Re: #{subject}","#{answer}\nhttp://grep.herokuapp.com/")
         content_type 'text/plain'
