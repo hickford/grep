@@ -56,7 +56,7 @@ class Grep < Sinatra::Base
         # do something with mail
         pattern = subject
         matches = find(Regexp.new(pattern.downcase))
-        answer = matches.empty? ? matches.join : "no matches :("
+        answer = matches.empty? ? "no matches :(" : matches.join
         email(correspondent,"Re: #{subject}","#{answer}\nhttp://grep.herokuapp.com/")
         content_type 'text/plain'
         "Emailed #{matches.length} matches for #{pattern} to #{correspondent}"
