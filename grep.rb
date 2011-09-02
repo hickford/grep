@@ -25,7 +25,6 @@ class Grep < Sinatra::Base
           :to => to,
           :subject => subject,
           :body => body,
-          #:port => '587',
           :via => :smtp,
           :via_options => { 
             :port                 => '587', 
@@ -45,7 +44,6 @@ class Grep < Sinatra::Base
             redirect to('/')
         end
         content_type 'text/plain'
-        cache_control :public
         answer = find(Regexp.new(pattern.downcase)).join
     end
 
