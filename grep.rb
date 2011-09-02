@@ -44,7 +44,9 @@ class Grep < Sinatra::Base
             redirect to('/')
         end
         content_type 'text/plain'
-        answer = find(Regexp.new(pattern.downcase)).join
+        matches = find(Regexp.new(pattern.downcase))
+        intro = matches.empty? ? "No matches for #{pattern.downcase}" : "Matches for #{pattern.downcase}:"
+        intro + "\n" + matches.join
     end
 
     post '/incoming_mail' do
