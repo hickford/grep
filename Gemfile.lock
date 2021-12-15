@@ -3,13 +3,8 @@ GEM
   specs:
     daemons (1.4.1)
     eventmachine (1.2.7)
-    mail (2.7.1)
-      mini_mime (>= 0.1.1)
-    mini_mime (1.1.2)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    pony (1.13.1)
-      mail (>= 2.0)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -29,8 +24,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  mail
-  pony
   sinatra
   thin
 
