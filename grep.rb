@@ -16,7 +16,7 @@ class Grep < Sinatra::Base
       
     helpers do
         def find(pattern)
-            open('scowl-50.txt').grep(pattern)
+            open('scowl-60.txt').grep(pattern)
         end
         
         def email(to,subject,body)
