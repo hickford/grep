@@ -1,15 +1,18 @@
 require 'sinatra/base'
-require 'yaml'
 
 class Grep < Sinatra::Base
+    configure do
+        set :words, File.readlines('scowl-60.txt')
+    end
+
     helpers do
         def find(pattern)
-            open('scowl-60.txt').grep(pattern)
+            settings.words.grep(pattern)
         end
     end
     
     get '/grep' do
-        pattern = params[:pattern]
+        pattern = params[:pattern].strip
         if not pattern or pattern == ''
             redirect to('/')
         end
