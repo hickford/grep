@@ -1,5 +1,5 @@
+require 'rack/protection'
+use Rack::Protection::StrictTransport, :preload => true, :without_session => true
 use Rack::Static, :urls => {"/" => 'index.html'}
 require './grep'
-require 'rack/protection'
-use Rack::Protection::StrictTransport
 run Grep
